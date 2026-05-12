@@ -5,8 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tailwindcss -i ./input.css -o ./assets/tailwind.css --minify",
-    "dev": "tailwindcss -i ./input.css -o ./assets/tailwind.css --watch",
-    "postinstall": "npx update-browserslist-db@latest"
+    "dev": "tailwindcss -i ./input.css -o ./assets/tailwind.css --watch"
   },
   "repository": {
     "type": "git",
