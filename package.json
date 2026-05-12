@@ -1,0 +1,27 @@
+{
+  "name": "leandromsilva-page",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tailwindcss -i ./input.css -o ./assets/tailwind.css --minify",
+    "dev": "tailwindcss -i ./input.css -o ./assets/tailwind.css --watch",
+    "postinstall": "npx update-browserslist-db@latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandromds/leandromsilva-page.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leandromds/leandromsilva-page/issues"
+  },
+  "homepage": "https://github.com/leandromds/leandromsilva-page#readme",
+  "description": "",
+  "devDependencies": {
+    "autoprefixer": "^10.5.0",
+    "tailwindcss": "^3.4.19"
+  }
+}
