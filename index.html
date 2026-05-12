@@ -1,0 +1,1453 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leandro Silva — Front-End Engineer</title>
+<meta name="description" content="Engenheiro Front-End com 10 anos construindo interfaces para SaaS, ERPs, e-commerce e mobile.">
+<meta name="ext-resource-dependency" content="https://cdn.tailwindcss.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink:       '#0F1419',
+        'navy-900':'#1B2F4A',
+        'navy-600':'#3B5474',
+        'slate-500':'#6B7280',
+        'slate-300':'#C4C8CE',
+        'slate-200':'#E5E7EB',
+        'slate-100':'#ECEDEF',
+        paper:     '#FAFAF7',
+      },
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        sans:    ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono:    ['"Geist Mono"', 'ui-monospace', 'monospace'],
+      },
+      letterSpacing: {
+        tightest: '-0.03em',
+      },
+      borderRadius: {
+        none: '0px',
+      },
+    },
+  },
+};
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    background: #FAFAF7;
+    color: #0F1419;
+    font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: #1B2F4A; color: #FAFAF7; }
+
+  /* Focus ring — outline 2px navy-900 com 4px offset */
+  :focus-visible {
+    outline: 2px solid #1B2F4A;
+    outline-offset: 4px;
+  }
+
+  /* Tipografia helpers */
+  .display-xl {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+  .hero-h1 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(34px, 9vw, 68px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+  .hero-h1 span {
+    display: inline;
+    white-space: normal;
+  }
+  @media (min-width: 640px) {
+    .hero-h1 { font-size: clamp(40px, 6.6vw, 68px); line-height: 0.96; }
+    .hero-h1 span { display: inline-block; white-space: nowrap; }
+  }
+  .display {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .h3-display {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .lead {
+    font-family: 'Geist', sans-serif;
+    font-weight: 400;
+    font-size: clamp(19px, 1.5vw, 20px);
+    line-height: 1.55;
+  }
+  .caption {
+    font-family: 'Geist Mono', monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  @media (min-width: 768px) {
+    .caption { font-size: 12px; }
+  }
+
+  /* Motif: accent-bar antes de H2 */
+  .accent-bar { position: relative; padding-left: 18px; }
+  .accent-bar::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.18em; bottom: 0.18em;
+    width: 3px;
+    background: #1B2F4A;
+  }
+
+  /* Motif: underline animado */
+  .link-grow { position: relative; display: inline-block; }
+  .link-grow::after {
+    content: '';
+    position: absolute; left: 0; bottom: -2px;
+    width: 100%; height: 1px;
+    background: #1B2F4A;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s cubic-bezier(.7,0,.3,1);
+  }
+  .link-grow:hover::after,
+  .link-grow:focus-visible::after { transform: scaleX(1); }
+
+  /* Nav link — underline pré-existente que fica mais sólido no hover */
+  .nav-link {
+    position: relative;
+    transition: color 200ms ease;
+  }
+  .nav-link:hover { color: #0F1419; }
+
+  /* Placeholder de imagem com listras diagonais */
+  .placeholder-img {
+    background-color: #ECEDEF;
+    background-image:
+      repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 11px,
+        #C4C8CE 11px,
+        #C4C8CE 12px
+      );
+    position: relative;
+  }
+  .placeholder-img::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6B7280;
+    background: #FAFAF7;
+    padding: 6px 10px;
+    width: max-content;
+    height: max-content;
+    margin: auto;
+    border: 1px solid #C4C8CE;
+  }
+
+  /* Card hover: borda escurece */
+  .card-hover {
+    transition: border-color 200ms ease, background-color 200ms ease;
+  }
+  .card-hover:hover { border-color: #1B2F4A; }
+
+  /* Botão primário/secundário */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    font-family: 'Geist', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1;
+    border-radius: 0;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn-primary { background: #1B2F4A; color: #FAFAF7; }
+  .btn-primary:hover { background: #0F1419; }
+  .btn-outline {
+    background: transparent;
+    color: #1B2F4A;
+    border-color: #1B2F4A;
+  }
+  .btn-outline:hover { background: #1B2F4A; color: #FAFAF7; }
+
+  /* Chip */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #C4C8CE;
+    padding: 4px 12px;
+    font-family: 'Geist Mono', monospace;
+    font-weight: 500;
+    font-size: 12px;
+    color: #6B7280;
+    background: transparent;
+    border-radius: 0;
+  }
+
+  /* Status pill */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #C4C8CE;
+    background: #FFFFFF;
+    padding: 6px 12px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    color: #0F1419;
+    border-radius: 9999px;
+  }
+  .status-dot {
+    position: relative;
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: #16A34A;
+    border-radius: 9999px;
+  }
+  .status-dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: #16A34A;
+    animation: pulse-online 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    opacity: 0.6;
+  }
+  @keyframes pulse-online {
+    0%   { transform: scale(1);   opacity: 0.6; }
+    80%  { transform: scale(2.6); opacity: 0;   }
+    100% { transform: scale(2.6); opacity: 0;   }
+  }
+
+  /* Top stripe */
+  .stripe { display: flex; height: 8px; }
+  .stripe > .a { background: #1B2F4A; flex: 2; }
+  .stripe > .b { background: #6B7280; flex: 1; }
+  .stripe-inv > .a { background: #6B7280; flex: 1; }
+  .stripe-inv > .b { background: #1B2F4A; flex: 2; }
+
+  /* Tag-syntax eyebrow */
+  .eyebrow-tag {
+    font-family: 'Geist Mono', monospace;
+    font-weight: 500;
+    font-size: 12px;
+    color: #1B2F4A;
+    letter-spacing: 0.02em;
+  }
+
+  /* Section paddings */
+  .section-pad { padding-top: 72px; padding-bottom: 72px; }
+  @media (min-width: 640px) { .section-pad { padding-top: 96px; padding-bottom: 96px; } }
+  @media (min-width: 768px) { .section-pad { padding-top: 128px; padding-bottom: 128px; } }
+
+  /* Mobile menu hidden state */
+  .nav-mobile[hidden] { display: none; }
+
+  /* Portrait — tratamento cinematográfico: sombras profundas, alto contraste */
+  .portrait-frame {
+    background: #050608;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6);
+  }
+  .portrait {
+    filter: grayscale(1) contrast(1.55) brightness(0.65);
+    transition: filter 800ms cubic-bezier(.7,0,.3,1);
+  }
+  .portrait-frame:hover .portrait {
+    filter: grayscale(1) contrast(1.6) brightness(0.72);
+  }
+  .portrait-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 90% at 30% 35%, transparent 30%, rgba(0,0,0,0.55) 85%),
+      linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.45) 100%);
+    mix-blend-mode: multiply;
+  }
+
+  /* ----- Fundo decorativo controlado por scroll ----- */
+  :root {
+    --scroll-px: 0px;
+    --scroll-pct: 0%;
+  }
+  body { position: relative; }
+  .bg-deco {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    contain: strict;
+  }
+  header, main, footer { position: relative; z-index: 1; }
+
+  /* Réguas verticais — parallax suave */
+  .bg-deco .rule {
+    position: absolute;
+    top: -20vh; bottom: -20vh;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent 0%, #C4C8CE 14%, #C4C8CE 86%, transparent 100%);
+    opacity: 0.35;
+    will-change: transform;
+    transform: translate3d(0, calc(var(--scroll-px) * -0.12), 0);
+  }
+  .bg-deco .rule-l { left: 12px; }
+  .bg-deco .rule-r { right: 12px; }
+  @media (min-width: 640px) {
+    .bg-deco .rule-l { left: 24px; }
+    .bg-deco .rule-r { right: 24px; }
+  }
+  @media (min-width: 1024px) {
+    .bg-deco .rule-l { left: max(24px, calc(50vw - 620px)); }
+    .bg-deco .rule-r { right: max(24px, calc(50vw - 620px)); }
+  }
+
+  /* Marcadores em monoespaçada nas margens */
+  .bg-deco .tick {
+    position: absolute;
+    font-family: 'Geist Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: #6B7280;
+    opacity: 0.55;
+    white-space: nowrap;
+    will-change: transform;
+  }
+  .bg-deco .tick::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background: #1B2F4A;
+    vertical-align: middle;
+    margin-right: 8px;
+    opacity: 0.7;
+  }
+  .bg-deco .tick-r { right: 36px; text-align: right; }
+  .bg-deco .tick-r::before { display: none; }
+  .bg-deco .tick-r::after {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 1px;
+    background: #1B2F4A;
+    vertical-align: middle;
+    margin-left: 8px;
+    opacity: 0.7;
+  }
+  .bg-deco .tick-l { left: 36px; }
+
+  .bg-deco .t1 { top: 14vh; transform: translate3d(0, calc(var(--scroll-px) * -0.22), 0); }
+  .bg-deco .t2 { top: 46vh; transform: translate3d(0, calc(var(--scroll-px) * -0.14), 0); }
+  .bg-deco .t3 { top: 78vh; transform: translate3d(0, calc(var(--scroll-px) * -0.28), 0); }
+  @media (max-width: 767px) {
+    .bg-deco .tick, .bg-deco .hash, .bg-deco .dot { display: none; }
+  }
+
+  /* Pontos minúsculos que driftam */
+  .bg-deco .dot {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: #1B2F4A;
+    opacity: 0.25;
+    will-change: transform;
+  }
+  .bg-deco .d1 { top: 28vh; left: 12vw; transform: translate3d(0, calc(var(--scroll-px) * -0.4), 0); }
+  .bg-deco .d2 { top: 64vh; right: 18vw; transform: translate3d(0, calc(var(--scroll-px) * -0.55), 0); }
+  .bg-deco .d3 { top: 88vh; left: 38vw; transform: translate3d(0, calc(var(--scroll-px) * -0.32), 0); }
+
+  /* Hash diagonal sutil — gira lentamente conforme rolagem */
+  .bg-deco .hash {
+    position: absolute;
+    width: 64px; height: 64px;
+    opacity: 0.25;
+    will-change: transform;
+  }
+  .bg-deco .hash svg { width: 100%; height: 100%; display: block; }
+  .bg-deco .h1 { top: 38vh; right: 8vw; transform: translate3d(0, calc(var(--scroll-px) * -0.18), 0) rotate(calc(var(--scroll-px) * 0.04deg)); }
+  .bg-deco .h2 { top: 8vh;  left: 6vw;  transform: translate3d(0, calc(var(--scroll-px) * -0.1), 0) rotate(calc(var(--scroll-px) * -0.06deg)); }
+
+  /* Barra de progresso no topo */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    z-index: 60;
+    pointer-events: none;
+    background: transparent;
+  }
+  .scroll-progress > span {
+    display: block;
+    height: 100%;
+    width: var(--scroll-pct);
+    background: #1B2F4A;
+  }
+
+  /* Leitor de progresso */
+  .scroll-readout {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 30;
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: #6B7280;
+    pointer-events: none;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(250, 250, 247, 0.65);
+    border: 1px solid #E5E7EB;
+    backdrop-filter: blur(4px);
+  }
+  @media (min-width: 768px) {
+    .scroll-readout { display: inline-flex; }
+  }
+  .scroll-readout::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: #1B2F4A;
+    opacity: 0.7;
+  }
+  @media (max-width: 640px) { .scroll-readout { display: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bg-deco .rule,
+    .bg-deco .tick,
+    .bg-deco .dot,
+    .bg-deco .hash { transform: none !important; }
+    .portrait { transition: none; }
+    #knot { animation: none !important; }
+  }
+
+  /* Case illustration container */
+  .case-illu {
+    background: #FFFFFF;
+    overflow: hidden;
+    display: block;
+  }
+  .case-illu svg { display: block; width: 100%; height: 100%; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- Fundo decorativo (parallax suave controlado por scroll) -->
+<div class="bg-deco" aria-hidden="true">
+  <span class="rule rule-l"></span>
+  <span class="rule rule-r"></span>
+  <span class="hash h1"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g stroke="#1B2F4A" stroke-width="1" fill="none"><line x1="0" y1="16" x2="64" y2="16"/><line x1="0" y1="32" x2="64" y2="32"/><line x1="0" y1="48" x2="64" y2="48"/></g></svg></span>
+  <span class="hash h2"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g stroke="#1B2F4A" stroke-width="1" fill="none"><line x1="16" y1="0" x2="16" y2="64"/><line x1="32" y1="0" x2="32" y2="64"/><line x1="48" y1="0" x2="48" y2="64"/></g></svg></span>
+  <span class="tick tick-l t1">01 / hero</span>
+  <span class="tick tick-r t2">sobre / 03</span>
+  <span class="tick tick-l t3">projetos / 05</span>
+  <span class="dot d1"></span>
+  <span class="dot d2"></span>
+  <span class="dot d3"></span>
+</div>
+
+<!-- Barra de progresso de leitura -->
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+<!-- Leitor de progresso (canto inferior direito) -->
+<div class="scroll-readout" aria-hidden="true"><span id="srVal">00</span> %</div>
+
+<!-- 1. Top stripe -->
+<div class="stripe" aria-hidden="true">
+  <div class="a"></div>
+  <div class="b"></div>
+</div>
+
+<!-- Nav -->
+<header class="border-b border-slate-300 bg-paper sticky top-0 z-40">
+  <nav class="max-w-[1280px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between" aria-label="Principal">
+    <a href="#top" class="flex items-center gap-3" aria-label="Início">
+      <img src="assets/logo.svg" alt="" width="32" height="32" class="block w-8 h-8 md:w-9 md:h-9" aria-hidden="true">
+      <span class="font-display italic font-semibold text-[22px] md:text-[24px] tracking-tightest text-ink">leandrosilva</span>
+    </a>
+    <ul class="hidden md:flex items-center gap-8">
+      <li><a href="#sobre"        class="nav-link caption text-slate-500 hover:text-ink">sobre</a></li>
+      <li><a href="#como-ajudo"   class="nav-link caption text-slate-500 hover:text-ink">como-ajudo</a></li>
+      <li><a href="#projetos"     class="nav-link caption text-slate-500 hover:text-ink">projetos</a></li>
+      <li><a href="#stack"        class="nav-link caption text-slate-500 hover:text-ink">stack</a></li>
+      <li><a href="#contato"      class="nav-link caption text-slate-500 hover:text-ink">contato</a></li>
+    </ul>
+    <button id="navToggle" class="md:hidden caption text-ink border border-slate-300 px-3 py-2" aria-controls="navMobile" aria-expanded="false">
+      <span data-open>menu</span>
+    </button>
+  </nav>
+  <div id="navMobile" class="nav-mobile md:hidden border-t border-slate-200" hidden>
+    <ul class="flex flex-col px-6 py-4 gap-3">
+      <li><a href="#sobre"      class="block caption text-slate-500 py-2">sobre</a></li>
+      <li><a href="#como-ajudo" class="block caption text-slate-500 py-2">como-ajudo</a></li>
+      <li><a href="#projetos"   class="block caption text-slate-500 py-2">projetos</a></li>
+      <li><a href="#stack"      class="block caption text-slate-500 py-2">stack</a></li>
+      <li><a href="#contato"    class="block caption text-slate-500 py-2">contato</a></li>
+    </ul>
+  </div>
+</header>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <rect width="200" height="200" fill="#FAFAF7"/>
+    <g transform="translate(100,100)" fill="none" stroke="#1B2F4A" stroke-width="1.2">
+      <circle r="38" cx="-14" cy="-10"/>
+      <circle r="38" cx="14"  cy="-10"/>
+      <circle r="38" cx="0"   cy="14"/>
+    </g>
+    <text x="100" y="178" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1B2F4A" letter-spacing="2">LEANDRO SILVA</text>
+  </svg>
+</template>
+
+<main id="top">
+
+  <!-- 2. Hero -->
+  <section class="border-b border-slate-300 relative overflow-hidden" aria-labelledby="hero-h1">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10 min-h-[92vh] flex flex-col relative">
+      <!-- Wireframe knot stage (centered, behind text) -->
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+        <canvas id="knot" class="block w-[min(90vw,72vh,880px)] h-[min(90vw,72vh,880px)] max-w-full opacity-90"></canvas>
+      </div>
+
+      <!-- Top spacer -->
+      <div class="flex-1 min-h-[64px] md:min-h-[120px]"></div>
+
+      <!-- H1 area -->
+      <div class="relative grid grid-cols-12 gap-6 items-end">
+        <!-- Left: bio + CTA -->
+        <div class="col-span-12 md:col-span-5 order-2 md:order-1 mt-12 md:mt-0">
+          <div class="eyebrow-tag mb-5">&lt;bio /&gt;</div>
+          <p class="lead text-ink max-w-sm">
+            Engenheiro Front-End com 10 anos construindo interfaces para SaaS, ERPs, e-commerce e mobile. Trabalho como IC: executo bem o combinado, contribuo com visão técnica quando o time chama.
+          </p>
+          <div class="mt-8">
+            <a href="#sobre" class="caption text-ink inline-flex items-center gap-2 pb-1 border-b border-ink hover:text-navy-900 hover:border-navy-900 transition-colors">
+              Explorar
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: big headline -->
+        <div class="col-span-12 md:col-span-7 order-1 md:order-2 text-left md:text-right">
+          <h1 id="hero-h1" class="hero-h1 text-ink">
+            <span>Front-End&nbsp;Engineer</span><br><span>&amp; Interface Builder</span>
+          </h1>
+          <p class="caption text-slate-500 mt-5">// since 2016</p>
+        </div>
+      </div>
+
+      <!-- Hero illustration: pipeline source → components → interface -->
+      <div class="hidden mt-16 lg:mt-24 pt-10 lg:pt-12 border-t border-slate-200">
+        <div class="w-full">
+          <svg viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" class="w-full h-auto block" role="img" aria-label="Diagrama: do código aos componentes à interface">
+            <text x="0" y="14" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="2">/ SISTEMA · PIPELINE</text>
+            <text x="1200" y="14" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="2" text-anchor="end">REACT · TS · VITE</text>
+            <line x1="0" y1="28" x2="1200" y2="28" stroke="#E5E7EB"/>
+            <line x1="320" y1="148" x2="420" y2="148" stroke="#C4C8CE" stroke-dasharray="4 4"/>
+            <line x1="780" y1="148" x2="880" y2="148" stroke="#C4C8CE" stroke-dasharray="4 4"/>
+            <!-- C1: editor -->
+            <rect x="0" y="48" width="320" height="180" fill="#FFFFFF" stroke="#C4C8CE"/>
+            <line x1="0" y1="76" x2="320" y2="76" stroke="#C4C8CE"/>
+            <text x="14" y="68" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="1.5">component.tsx</text>
+            <g font-family="'Geist Mono', monospace" font-size="10" fill="#C4C8CE">
+              <text x="14" y="100">01</text><text x="14" y="118">02</text><text x="14" y="136">03</text><text x="14" y="154">04</text><text x="14" y="172">05</text><text x="14" y="190">06</text><text x="14" y="208">07</text>
+            </g>
+            <rect x="40" y="94"  width="130" height="6" fill="#1B2F4A"/>
+            <rect x="40" y="112" width="180" height="6" fill="#0F1419"/>
+            <rect x="56" y="130" width="120" height="6" fill="#6B7280"/>
+            <rect x="56" y="148" width="160" height="6" fill="#6B7280"/>
+            <rect x="56" y="166" width="100" height="6" fill="#C4C8CE"/>
+            <rect x="56" y="184" width="200" height="6" fill="#6B7280"/>
+            <rect x="40" y="202" width="120" height="6" fill="#0F1419"/>
+            <text x="0" y="252" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="2">01 · SOURCE</text>
+            <!-- C2: component tree -->
+            <rect x="540" y="48" width="120" height="32" fill="#1B2F4A"/>
+            <text x="600" y="68" font-family="'Geist Mono', monospace" font-size="11" fill="#FFFFFF" text-anchor="middle">&lt;App /&gt;</text>
+            <line x1="600" y1="80"  x2="600" y2="100" stroke="#1B2F4A"/>
+            <line x1="480" y1="100" x2="720" y2="100" stroke="#1B2F4A"/>
+            <line x1="480" y1="100" x2="480" y2="120" stroke="#1B2F4A"/>
+            <line x1="600" y1="100" x2="600" y2="120" stroke="#1B2F4A"/>
+            <line x1="720" y1="100" x2="720" y2="120" stroke="#1B2F4A"/>
+            <rect x="420" y="120" width="120" height="32" fill="#FFFFFF" stroke="#1B2F4A"/>
+            <text x="480" y="140" font-family="'Geist Mono', monospace" font-size="11" fill="#0F1419" text-anchor="middle">Header</text>
+            <rect x="540" y="120" width="120" height="32" fill="#FFFFFF" stroke="#1B2F4A"/>
+            <text x="600" y="140" font-family="'Geist Mono', monospace" font-size="11" fill="#0F1419" text-anchor="middle">Main</text>
+            <rect x="660" y="120" width="120" height="32" fill="#FFFFFF" stroke="#1B2F4A"/>
+            <text x="720" y="140" font-family="'Geist Mono', monospace" font-size="11" fill="#0F1419" text-anchor="middle">Footer</text>
+            <line x1="600" y1="152" x2="600" y2="170" stroke="#C4C8CE"/>
+            <line x1="560" y1="170" x2="640" y2="170" stroke="#C4C8CE"/>
+            <line x1="560" y1="170" x2="560" y2="186" stroke="#C4C8CE"/>
+            <line x1="640" y1="170" x2="640" y2="186" stroke="#C4C8CE"/>
+            <rect x="530" y="186" width="60" height="22" fill="#FFFFFF" stroke="#C4C8CE"/>
+            <text x="560" y="201" font-family="'Geist Mono', monospace" font-size="9" fill="#6B7280" text-anchor="middle">List</text>
+            <rect x="610" y="186" width="60" height="22" fill="#FFFFFF" stroke="#C4C8CE"/>
+            <text x="640" y="201" font-family="'Geist Mono', monospace" font-size="9" fill="#6B7280" text-anchor="middle">Form</text>
+            <text x="420" y="252" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="2">02 · COMPONENTS</text>
+            <!-- C3: rendered interface -->
+            <rect x="880" y="48" width="320" height="180" fill="#FFFFFF" stroke="#1B2F4A"/>
+            <line x1="880" y1="80" x2="1200" y2="80" stroke="#C4C8CE"/>
+            <rect x="894" y="60" width="50" height="10" fill="#0F1419"/>
+            <rect x="1090" y="63" width="14" height="6" fill="#6B7280"/>
+            <rect x="1112" y="63" width="14" height="6" fill="#6B7280"/>
+            <rect x="1134" y="63" width="14" height="6" fill="#6B7280"/>
+            <rect x="1156" y="63" width="14" height="6" fill="#6B7280"/>
+            <text x="894" y="118" font-family="Fraunces, serif" font-style="italic" font-weight="600" font-size="22" fill="#0F1419">Interfaces.</text>
+            <rect x="894" y="130" width="240" height="6" fill="#C4C8CE"/>
+            <rect x="894" y="142" width="180" height="6" fill="#C4C8CE"/>
+            <rect x="894" y="158" width="80" height="14" fill="#1B2F4A"/>
+            <rect x="894"  y="184" width="92" height="36" fill="#ECEDEF"/>
+            <rect x="994"  y="184" width="92" height="36" fill="#ECEDEF"/>
+            <rect x="1094" y="184" width="92" height="36" fill="#ECEDEF"/>
+            <text x="880" y="252" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="2">03 · INTERFACE</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="flex-1 min-h-[40px] md:min-h-[64px]"></div>
+    </div>
+  </section>
+
+  <!-- 3. Sobre -->
+  <section id="sobre" class="border-b border-slate-300 section-pad" aria-labelledby="sobre-h2">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+      <div class="eyebrow-tag mb-6">&lt;sobre&gt;</div>
+      <h2 id="sobre-h2" class="display text-ink accent-bar">Sobre mim</h2>
+
+      <div class="grid grid-cols-12 gap-8 md:gap-12 mt-16">
+        <!-- Portrait -->
+        <div class="col-span-12 md:col-span-5">
+          <div class="portrait-frame w-full aspect-[4/5] border border-slate-300 overflow-hidden relative">
+            <img src="assets/leandro.jpg" alt="Retrato de Leandro Silva" class="portrait block w-full h-full object-cover" loading="lazy">
+            <span class="portrait-vignette" aria-hidden="true"></span>
+          </div>
+          <p class="caption text-slate-500 mt-4">// retrato — São Paulo, Brasil</p>
+        </div>
+
+        <!-- Texto -->
+        <div class="col-span-12 md:col-span-7">
+          <div class="space-y-6 max-w-[58ch]">
+            <p class="text-ink leading-[1.6]">
+              Comecei em agência fazendo email marketing e sites institucionais, e fui evoluindo até estruturar interfaces de plataformas SaaS, ERPs e aplicativos mobile em startups e empresas de médio porte.
+            </p>
+            <p class="text-ink leading-[1.6]">
+              Hoje atuo como Front-End especialista. Domino React, Vite, TypeScript e React Native. Trabalhei com chat em tempo real, integrações com APIs externas (pagamentos, OAuth, calendários), GraphQL, micro front-ends — o que o problema pedir do lado da interface.
+            </p>
+            <p class="text-ink leading-[1.6]">
+              Como IC, foco em executar bem o combinado: você não precisa gerenciar meu trabalho, e eu não vou tentar gerenciar o seu produto. Atualmente também construo um produto próprio, o que me dá contato direto com o lado back-end (Python/FastAPI) — área que aprendo em paralelo, mas que ainda não ofereço como serviço.
+            </p>
+          </div>
+
+          <!-- Sub-blocos -->
+          <div class="border-t border-slate-200 mt-12 pt-10 grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <div>
+              <div class="caption text-navy-900 mb-5">// principais</div>
+              <ul class="space-y-2 font-mono text-sm text-ink">
+                <li>React</li>
+                <li>Vite</li>
+                <li>TypeScript</li>
+                <li>React Native</li>
+                <li>Redux · Redux-Saga</li>
+                <li>GraphQL</li>
+              </ul>
+            </div>
+            <div>
+              <div class="caption text-navy-900 mb-5">// já atuei em</div>
+              <ul class="space-y-2 font-mono text-sm text-ink">
+                <li>SaaS / ERP</li>
+                <li>E-commerce</li>
+                <li>MarTech</li>
+                <li>Saúde</li>
+                <li>Fitness</li>
+                <li>Social / Eventos</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="mt-12 flex flex-wrap gap-3">
+            <a href="#projetos" class="btn btn-primary">Ver projetos<span aria-hidden="true">→</span></a>
+            <a href="#contato"  class="btn btn-outline">Falar comigo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Como posso ajudar -->
+  <section id="como-ajudo" class="border-b border-slate-300 section-pad" aria-labelledby="ajuda-h2">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+      <div class="eyebrow-tag mb-6">&lt;como-posso-ajudar&gt;</div>
+      <div class="grid grid-cols-12 gap-8 items-end">
+        <h2 id="ajuda-h2" class="col-span-12 md:col-span-7 display text-ink accent-bar">Como posso ajudar</h2>
+        <p class="col-span-12 md:col-span-5 lead text-slate-500">
+          Quatro frentes de trabalho, conforme o tipo de projeto e quem está do outro lado.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-300 border border-slate-300 mt-16">
+        <!-- Card 01 -->
+        <article class="card-hover bg-white border border-transparent p-8 md:p-10">
+          <div class="caption text-slate-500 mb-6">01 — Para agências e estúdios</div>
+          <h3 class="h3-display text-ink mb-4">Dev front-end sob demanda</h3>
+          <p class="text-slate-500 leading-[1.6]">Para projetos com prazo apertado. Sites, landing pages, integrações, white-label. Encaixo no fluxo do time, entrego no padrão da casa, comunico direto com PMs e designers.</p>
+          <ul class="mt-6 space-y-1.5 font-mono text-sm text-ink">
+            <li>· Sites institucionais</li>
+            <li>· Landing pages</li>
+            <li>· Integrações de marca</li>
+          </ul>
+        </article>
+
+        <!-- Card 02 -->
+        <article class="card-hover bg-white border border-transparent p-8 md:p-10">
+          <div class="caption text-slate-500 mb-6">02 — Para startups e SaaS</div>
+          <h3 class="h3-display text-ink mb-4">Interfaces complexas</h3>
+          <p class="text-slate-500 leading-[1.6]">Construção e manutenção de produto. Refatoração de legado, implementação de design systems, consumo de APIs existentes. Já passei pela dor de escalar produto.</p>
+          <ul class="mt-6 space-y-1.5 font-mono text-sm text-ink">
+            <li>· Design systems</li>
+            <li>· Refatoração de legado</li>
+            <li>· Front-end de SaaS</li>
+          </ul>
+        </article>
+
+        <!-- Card 03 -->
+        <article class="card-hover bg-white border border-transparent p-8 md:p-10">
+          <div class="caption text-slate-500 mb-6">03 — Para PMEs e empresas locais</div>
+          <h3 class="h3-display text-ink mb-4">Sistemas que o time usa</h3>
+          <p class="text-slate-500 leading-[1.6]">Front-end de sistemas internos, dashboards e painéis administrativos. Modernização de interfaces antigas e telas que o time realmente usa no dia-a-dia.</p>
+          <ul class="mt-6 space-y-1.5 font-mono text-sm text-ink">
+            <li>· ERPs leves</li>
+            <li>· Dashboards</li>
+            <li>· Painéis admin</li>
+          </ul>
+        </article>
+
+        <!-- Card 04 -->
+        <article class="card-hover bg-white border border-transparent p-8 md:p-10">
+          <div class="caption text-slate-500 mb-6">04 — Para empreendedores e infoprodutores</div>
+          <h3 class="h3-display text-ink mb-4">Páginas que convertem</h3>
+          <p class="text-slate-500 leading-[1.6]">Landing pages que convertem, áreas de membros, integrações com plataformas de venda e ferramentas no-code. Foco em velocidade de entrega e mensuração.</p>
+          <ul class="mt-6 space-y-1.5 font-mono text-sm text-ink">
+            <li>· Landing pages</li>
+            <li>· Áreas de membros</li>
+            <li>· Automação + IA</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Projetos Realizados -->
+  <section id="projetos" class="border-b border-slate-300 section-pad" aria-labelledby="projetos-h2">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+      <div class="eyebrow-tag mb-6">&lt;projetos /&gt;</div>
+      <div class="grid grid-cols-12 gap-8 items-end">
+        <h2 id="projetos-h2" class="col-span-12 md:col-span-7 display text-ink accent-bar">Projetos Realizados</h2>
+        <p class="col-span-12 md:col-span-5 lead text-slate-500">
+          Cases anonimizados — nomes de clientes preservados sob NDA.
+        </p>
+      </div>
+
+      <div class="mt-16 space-y-20 md:space-y-28">
+
+        <!-- Case 1 — imagem esquerda -->
+        <article class="grid grid-cols-12 gap-8 md:gap-12 items-center">
+          <div class="col-span-12 md:col-span-6 order-1">
+            <div class="case-illu w-full aspect-[4/3] border border-slate-300" role="img" aria-label="Ilustração: lista de pacientes e calendário de consultas">
+              <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <rect width="600" height="450" fill="#FFFFFF"/>
+                <text x="32" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5">PACIENTES / 248</text>
+                <text x="568" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5" text-anchor="end">JUN · 2023</text>
+                <line x1="32" y1="60" x2="568" y2="60" stroke="#E5E7EB"/>
+                <line x1="380" y1="60" x2="380" y2="410" stroke="#E5E7EB"/>
+                <g transform="translate(32, 86)">
+                  <rect x="-16" y="42" width="336" height="40" fill="#ECEDEF"/>
+                  <circle cx="16" cy="16" r="14" fill="#FAFAF7" stroke="#C4C8CE"/>
+                  <rect x="42" y="10" width="170" height="6" fill="#0F1419"/>
+                  <rect x="42" y="22" width="100" height="4" fill="#C4C8CE"/>
+                  <text x="304" y="20" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" text-anchor="end">14:30</text>
+                  <g transform="translate(0,48)"><circle cx="16" cy="16" r="14" fill="#1B2F4A"/><rect x="42" y="10" width="190" height="6" fill="#0F1419"/><rect x="42" y="22" width="120" height="4" fill="#6B7280"/><text x="304" y="20" font-family="'Geist Mono', monospace" font-size="10" fill="#1B2F4A" text-anchor="end">15:00</text></g>
+                  <g transform="translate(0,96)"><circle cx="16" cy="16" r="14" fill="#FAFAF7" stroke="#C4C8CE"/><rect x="42" y="10" width="160" height="6" fill="#0F1419"/><rect x="42" y="22" width="90" height="4" fill="#C4C8CE"/><text x="304" y="20" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" text-anchor="end">15:30</text></g>
+                  <g transform="translate(0,144)"><circle cx="16" cy="16" r="14" fill="#FAFAF7" stroke="#C4C8CE"/><rect x="42" y="10" width="180" height="6" fill="#0F1419"/><rect x="42" y="22" width="110" height="4" fill="#C4C8CE"/><text x="304" y="20" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" text-anchor="end">16:00</text></g>
+                  <g transform="translate(0,192)"><circle cx="16" cy="16" r="14" fill="#FAFAF7" stroke="#C4C8CE"/><rect x="42" y="10" width="200" height="6" fill="#0F1419"/><rect x="42" y="22" width="130" height="4" fill="#C4C8CE"/><text x="304" y="20" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" text-anchor="end">16:30</text></g>
+                  <g transform="translate(0,240)"><circle cx="16" cy="16" r="14" fill="#FAFAF7" stroke="#C4C8CE"/><rect x="42" y="10" width="150" height="6" fill="#0F1419"/><rect x="42" y="22" width="100" height="4" fill="#C4C8CE"/><text x="304" y="20" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" text-anchor="end">17:00</text></g>
+                </g>
+                <g transform="translate(404, 90)" font-family="'Geist Mono', monospace">
+                  <g font-size="9" fill="#6B7280" text-anchor="middle"><text x="10" y="0">D</text><text x="34" y="0">S</text><text x="58" y="0">T</text><text x="82" y="0">Q</text><text x="106" y="0">Q</text><text x="130" y="0">S</text><text x="154" y="0">S</text></g>
+                  <g transform="translate(0, 14)">
+                    <g fill="none" stroke="#C4C8CE"><rect x="72" y="0" width="20" height="20"/><rect x="96" y="0" width="20" height="20"/><rect x="120" y="0" width="20" height="20"/><rect x="144" y="0" width="20" height="20"/></g>
+                    <g fill="none" stroke="#C4C8CE" transform="translate(0,24)"><rect x="0" y="0" width="20" height="20"/><rect x="24" y="0" width="20" height="20"/><rect x="48" y="0" width="20" height="20"/><rect x="72" y="0" width="20" height="20"/><rect x="96" y="0" width="20" height="20"/><rect x="120" y="0" width="20" height="20"/><rect x="144" y="0" width="20" height="20"/></g>
+                    <g transform="translate(0,48)"><rect x="0" y="0" width="20" height="20" fill="none" stroke="#C4C8CE"/><rect x="24" y="0" width="20" height="20" fill="none" stroke="#C4C8CE"/><rect x="48" y="0" width="20" height="20" fill="#1B2F4A"/><rect x="72" y="0" width="20" height="20" fill="none" stroke="#C4C8CE"/><rect x="96" y="0" width="20" height="20" fill="none" stroke="#C4C8CE"/><rect x="120" y="0" width="20" height="20" fill="none" stroke="#C4C8CE"/><rect x="144" y="0" width="20" height="20" fill="none" stroke="#C4C8CE"/><text x="58" y="14" font-size="10" fill="#FFFFFF" text-anchor="middle">14</text></g>
+                    <g fill="none" stroke="#C4C8CE" transform="translate(0,72)"><rect x="0" y="0" width="20" height="20"/><rect x="24" y="0" width="20" height="20"/><rect x="48" y="0" width="20" height="20"/><rect x="72" y="0" width="20" height="20"/><rect x="96" y="0" width="20" height="20"/><rect x="120" y="0" width="20" height="20"/><rect x="144" y="0" width="20" height="20"/></g>
+                    <g fill="none" stroke="#C4C8CE" transform="translate(0,96)"><rect x="0" y="0" width="20" height="20"/><rect x="24" y="0" width="20" height="20"/><rect x="48" y="0" width="20" height="20"/><rect x="72" y="0" width="20" height="20"/></g>
+                  </g>
+                  <g transform="translate(0, 150)">
+                    <line x1="0" y1="0" x2="164" y2="0" stroke="#E5E7EB"/>
+                    <text x="0" y="20" font-size="10" fill="#6B7280" letter-spacing="1.5">PRÓX. CONSULTA</text>
+                    <text x="0" y="42" font-size="13" fill="#0F1419">14 · 15:00</text>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6 order-2">
+            <div class="caption text-slate-500 mb-4">2021—2023 · Saúde · ERP</div>
+            <h3 class="h3-display text-ink mb-4">ERP para clínicas médicas</h3>
+            <p class="text-slate-500 leading-[1.6] max-w-[56ch]">Plataforma para gestão de pacientes, agendamentos e prontuários em clínicas de pequeno e médio porte. Atuei no front-end, com foco em performance de listagens grandes e fluxos de atendimento.</p>
+            <div class="flex flex-wrap gap-2 mt-6">
+              <span class="chip">React</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">Redux</span>
+            </div>
+            <div class="mt-7">
+              <a href="#contato" class="link-grow caption text-navy-900">Ver caso →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case 2 — imagem direita -->
+        <article class="grid grid-cols-12 gap-8 md:gap-12 items-center">
+          <div class="col-span-12 md:col-span-6 order-1 md:order-2">
+            <div class="case-illu w-full aspect-[4/3] border border-slate-300" role="img" aria-label="Ilustração: gráfico de campanhas multicanal">
+              <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <rect width="600" height="450" fill="#FFFFFF"/>
+                <text x="32" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5">CAMPANHA · 042</text>
+                <text x="568" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5" text-anchor="end">JUL — DEZ</text>
+                <line x1="32" y1="60" x2="568" y2="60" stroke="#E5E7EB"/>
+                <g transform="translate(32, 80)" font-family="'Geist Mono', monospace">
+                  <text x="0" y="14" font-size="10" fill="#6B7280" letter-spacing="1.5">IMPRESSÕES</text>
+                  <text x="0" y="42" font-size="24" fill="#0F1419" font-weight="600">1.284M</text>
+                  <text x="160" y="14" font-size="10" fill="#6B7280" letter-spacing="1.5">CLIQUES</text>
+                  <text x="160" y="42" font-size="24" fill="#0F1419" font-weight="600">38.7K</text>
+                  <text x="300" y="14" font-size="10" fill="#6B7280" letter-spacing="1.5">CTR</text>
+                  <text x="300" y="42" font-size="24" fill="#0F1419" font-weight="600">3.01%</text>
+                  <text x="420" y="14" font-size="10" fill="#6B7280" letter-spacing="1.5">CANAIS</text>
+                  <text x="420" y="42" font-size="24" fill="#0F1419" font-weight="600">04</text>
+                </g>
+                <line x1="32" y1="140" x2="568" y2="140" stroke="#E5E7EB"/>
+                <g transform="translate(32, 168)">
+                  <line x1="0" y1="160" x2="536" y2="160" stroke="#C4C8CE"/>
+                  <g>
+                    <rect x="0"   y="100" width="28" height="60"  fill="#C4C8CE"/>
+                    <rect x="36"  y="80"  width="28" height="80"  fill="#C4C8CE"/>
+                    <rect x="72"  y="60"  width="28" height="100" fill="#6B7280"/>
+                    <rect x="108" y="40"  width="28" height="120" fill="#6B7280"/>
+                    <rect x="144" y="50"  width="28" height="110" fill="#6B7280"/>
+                    <rect x="180" y="20"  width="28" height="140" fill="#1B2F4A"/>
+                    <rect x="216" y="30"  width="28" height="130" fill="#1B2F4A"/>
+                    <rect x="252" y="10"  width="28" height="150" fill="#1B2F4A"/>
+                    <rect x="288" y="50"  width="28" height="110" fill="#6B7280"/>
+                    <rect x="324" y="70"  width="28" height="90"  fill="#6B7280"/>
+                    <rect x="360" y="40"  width="28" height="120" fill="#1B2F4A"/>
+                    <rect x="396" y="20"  width="28" height="140" fill="#1B2F4A"/>
+                    <rect x="432" y="60"  width="28" height="100" fill="#6B7280"/>
+                    <rect x="468" y="90"  width="28" height="70"  fill="#C4C8CE"/>
+                    <rect x="504" y="110" width="28" height="50"  fill="#C4C8CE"/>
+                  </g>
+                  <g font-family="'Geist Mono', monospace" font-size="9" fill="#6B7280" letter-spacing="1">
+                    <text x="0"   y="182">JUL</text>
+                    <text x="108" y="182">AGO</text>
+                    <text x="216" y="182">SET</text>
+                    <text x="324" y="182">OUT</text>
+                    <text x="432" y="182">NOV</text>
+                    <text x="504" y="182">DEZ</text>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6 order-2 md:order-1">
+            <div class="caption text-slate-500 mb-4">2020—2023 · MarTech · SaaS</div>
+            <h3 class="h3-display text-ink mb-4">Plataforma de campanhas de marketing</h3>
+            <p class="text-slate-500 leading-[1.6] max-w-[56ch]">Criação, gerenciamento e métricas de campanhas multicanal para times de marketing. Trabalhei na arquitetura de micro front-ends e na camada de dados via GraphQL.</p>
+            <div class="flex flex-wrap gap-2 mt-6">
+              <span class="chip">React</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">GraphQL</span>
+            </div>
+            <div class="mt-7">
+              <a href="#contato" class="link-grow caption text-navy-900">Ver caso →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case 3 — imagem esquerda -->
+        <article class="grid grid-cols-12 gap-8 md:gap-12 items-center">
+          <div class="col-span-12 md:col-span-6 order-1">
+            <div class="case-illu w-full aspect-[4/3] border border-slate-300" role="img" aria-label="Ilustração: card de evento com mensagens em tempo real">
+              <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <rect width="600" height="450" fill="#FFFFFF"/>
+                <text x="32" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5">EVENTO / @AMIGOS</text>
+                <text x="568" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5" text-anchor="end">12 PRESENÇAS</text>
+                <line x1="32" y1="60" x2="568" y2="60" stroke="#E5E7EB"/>
+                <g transform="translate(60, 92)">
+                  <rect x="0" y="0" width="320" height="260" fill="#FAFAF7" stroke="#C4C8CE"/>
+                  <rect x="0" y="0" width="320" height="150" fill="#ECEDEF"/>
+                  <g transform="translate(20, 20)" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="1.5"><text>SÁB · 12 OUT · 21H</text></g>
+                  <g transform="translate(20, 78)">
+                    <rect x="0" y="0" width="56" height="56" fill="#1B2F4A"/>
+                    <text x="28" y="24" font-family="'Geist Mono', monospace" font-size="10" fill="#FFFFFF" text-anchor="middle">OUT</text>
+                    <text x="28" y="46" font-family="Fraunces, serif" font-style="italic" font-weight="600" font-size="22" fill="#FFFFFF" text-anchor="middle">12</text>
+                  </g>
+                  <g transform="translate(170, 170)" font-family="Fraunces, serif">
+                    <text font-style="italic" font-weight="600" font-size="22" fill="#0F1419" text-anchor="middle">Rooftop · Vila Madalena</text>
+                  </g>
+                  <g transform="translate(20, 196)">
+                    <circle cx="10" cy="10" r="10" fill="#1B2F4A"/>
+                    <circle cx="26" cy="10" r="10" fill="#6B7280"/>
+                    <circle cx="42" cy="10" r="10" fill="#C4C8CE"/>
+                    <circle cx="58" cy="10" r="10" fill="#FAFAF7" stroke="#C4C8CE"/>
+                    <text x="82" y="14" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280">+ 8 amigos</text>
+                  </g>
+                  <g transform="translate(20, 232)">
+                    <rect x="0" y="0" width="110" height="14" fill="#1B2F4A"/>
+                    <text x="55" y="10" font-family="'Geist Mono', monospace" font-size="10" fill="#FFFFFF" text-anchor="middle">CONFIRMAR</text>
+                  </g>
+                </g>
+                <g transform="translate(360, 220)">
+                  <rect x="0" y="0" width="180" height="44" fill="#FFFFFF" stroke="#C4C8CE"/>
+                  <path d="M 12 44 L 4 56 L 28 44 Z" fill="#FFFFFF" stroke="#C4C8CE"/>
+                  <rect x="12" y="14" width="100" height="5" fill="#0F1419"/>
+                  <rect x="12" y="24" width="140" height="4" fill="#C4C8CE"/>
+                  <text x="168" y="12" font-family="'Geist Mono', monospace" font-size="8" fill="#6B7280" text-anchor="end">21:42</text>
+                </g>
+                <g transform="translate(340, 296)">
+                  <rect x="0" y="0" width="200" height="44" fill="#1B2F4A"/>
+                  <path d="M 188 44 L 196 56 L 172 44 Z" fill="#1B2F4A"/>
+                  <rect x="12" y="14" width="120" height="5" fill="#FFFFFF"/>
+                  <rect x="12" y="24" width="160" height="4" fill="#6B7280"/>
+                  <text x="188" y="12" font-family="'Geist Mono', monospace" font-size="8" fill="#C4C8CE" text-anchor="end">21:43</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6 order-2">
+            <div class="caption text-slate-500 mb-4">2020—2021 · Social · Mobile + Web · 🇺🇸 Cliente nos EUA</div>
+            <h3 class="h3-display text-ink mb-4">Rede social de eventos</h3>
+            <p class="text-slate-500 leading-[1.6] max-w-[56ch]">App para criação e divulgação de eventos com chat em tempo real, sistema de pagamento e integrações com Google Calendar e Outlook. Atuei nas versões web, iOS e Android.</p>
+            <div class="flex flex-wrap gap-2 mt-6">
+              <span class="chip">React</span>
+              <span class="chip">React Native</span>
+              <span class="chip">Redux-Saga</span>
+            </div>
+            <div class="mt-7">
+              <a href="#contato" class="link-grow caption text-navy-900">Ver caso →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case 4 — imagem direita -->
+        <article class="grid grid-cols-12 gap-8 md:gap-12 items-center">
+          <div class="col-span-12 md:col-span-6 order-1 md:order-2">
+            <div class="case-illu w-full aspect-[4/3] border border-slate-300" role="img" aria-label="Ilustração: editor drag-and-drop com blocos sobre um canvas">
+              <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <rect width="600" height="450" fill="#FFFFFF"/>
+                <text x="32" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5">EDITOR / PAGE-014</text>
+                <text x="568" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5" text-anchor="end">DRAG · DROP</text>
+                <line x1="32" y1="60" x2="568" y2="60" stroke="#E5E7EB"/>
+                <g transform="translate(32, 82)">
+                  <g font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="1.5">
+                    <text x="0" y="12">BLOCOS</text>
+                    <g transform="translate(0, 24)" stroke="#C4C8CE" fill="#FAFAF7">
+                      <rect x="0" y="0"   width="110" height="36"/>
+                      <rect x="0" y="44"  width="110" height="36"/>
+                      <rect x="0" y="88"  width="110" height="36"/>
+                      <rect x="0" y="132" width="110" height="36"/>
+                    </g>
+                    <g transform="translate(0, 24)" fill="#6B7280">
+                      <text x="12" y="22">HERO</text>
+                      <text x="12" y="66">FEATURES</text>
+                      <text x="12" y="110">PRICING</text>
+                      <text x="12" y="154">FOOTER</text>
+                    </g>
+                  </g>
+                </g>
+                <line x1="168" y1="82" x2="168" y2="410" stroke="#E5E7EB"/>
+                <g transform="translate(200, 92)">
+                  <rect x="0" y="0" width="344" height="310" fill="#FAFAF7" stroke="#C4C8CE"/>
+                  <g transform="translate(24, 24)">
+                    <rect x="0" y="0" width="296" height="80" fill="#FFFFFF" stroke="#C4C8CE"/>
+                    <rect x="24" y="22" width="180" height="10" fill="#0F1419"/>
+                    <rect x="24" y="40" width="140" height="6" fill="#C4C8CE"/>
+                    <rect x="24" y="54" width="80" height="14" fill="#1B2F4A"/>
+                  </g>
+                  <g transform="translate(24, 124)">
+                    <rect x="-4" y="-4" width="304" height="80" fill="none" stroke="#1B2F4A" stroke-width="1"/>
+                    <rect x="0" y="0" width="296" height="72" fill="#FFFFFF" stroke="#C4C8CE"/>
+                    <g transform="translate(16, 16)">
+                      <rect x="0" y="0" width="80" height="40" fill="#ECEDEF"/>
+                      <rect x="96" y="0" width="80" height="40" fill="#ECEDEF"/>
+                      <rect x="192" y="0" width="80" height="40" fill="#ECEDEF"/>
+                    </g>
+                    <g fill="#FFFFFF" stroke="#1B2F4A" stroke-width="1.5">
+                      <rect x="-8" y="-8" width="6" height="6"/>
+                      <rect x="294" y="-8" width="6" height="6"/>
+                      <rect x="-8" y="66" width="6" height="6"/>
+                      <rect x="294" y="66" width="6" height="6"/>
+                    </g>
+                  </g>
+                  <g transform="translate(24, 220)">
+                    <rect x="0" y="0" width="296" height="60" fill="#FFFFFF" stroke="#C4C8CE" stroke-dasharray="4 4"/>
+                    <text x="148" y="36" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" text-anchor="middle" letter-spacing="1.5">+ ARRASTE UM BLOCO</text>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6 order-2 md:order-1">
+            <div class="caption text-slate-500 mb-4">2021—2022 · No-code · Editor visual</div>
+            <h3 class="h3-display text-ink mb-4">Gerador de landing pages</h3>
+            <p class="text-slate-500 leading-[1.6] max-w-[56ch]">Editor visual drag-and-drop para criação rápida de páginas por times de marketing sem dependência de dev. Foco em UX do editor e exportação otimizada.</p>
+            <div class="flex flex-wrap gap-2 mt-6">
+              <span class="chip">React</span>
+              <span class="chip">Redux-Saga</span>
+              <span class="chip">TypeScript</span>
+            </div>
+            <div class="mt-7">
+              <a href="#contato" class="link-grow caption text-navy-900">Ver caso →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Case 5 — imagem esquerda -->
+        <article class="grid grid-cols-12 gap-8 md:gap-12 items-center">
+          <div class="col-span-12 md:col-span-6 order-1">
+            <div class="case-illu w-full aspect-[4/3] border border-slate-300" role="img" aria-label="Ilustração: perfil de personal trainer com horários disponíveis">
+              <svg viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+                <rect width="600" height="450" fill="#FFFFFF"/>
+                <text x="32" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5">BUSCA / TREINADOR</text>
+                <text x="568" y="40" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" letter-spacing="1.5" text-anchor="end">3 PROFISSIONAIS</text>
+                <line x1="32" y1="60" x2="568" y2="60" stroke="#E5E7EB"/>
+                <g transform="translate(32, 86)">
+                  <rect x="0" y="0" width="260" height="108" fill="#FFFFFF" stroke="#1B2F4A"/>
+                  <circle cx="54" cy="54" r="34" fill="#1B2F4A"/>
+                  <text x="54" y="61" font-family="Fraunces, serif" font-style="italic" font-weight="600" font-size="24" fill="#FFFFFF" text-anchor="middle">A</text>
+                  <rect x="104" y="30" width="120" height="8" fill="#0F1419"/>
+                  <rect x="104" y="44" width="80"  height="4" fill="#C4C8CE"/>
+                  <rect x="104" y="58" width="60"  height="4" fill="#C4C8CE"/>
+                  <g transform="translate(104, 76)" font-family="'Geist Mono', monospace" font-size="9" fill="#6B7280">
+                    <rect x="0"  y="0" width="56" height="16" fill="none" stroke="#C4C8CE"/>
+                    <text x="28" y="11" text-anchor="middle">HIPERTROFIA</text>
+                    <rect x="64" y="0" width="54" height="16" fill="none" stroke="#C4C8CE"/>
+                    <text x="91" y="11" text-anchor="middle">FUNCIONAL</text>
+                  </g>
+                  <g transform="translate(220, 16)" font-family="'Geist Mono', monospace">
+                    <text x="24" y="10" font-size="9" fill="#6B7280" text-anchor="end" letter-spacing="1.5">DESDE</text>
+                    <text x="24" y="26" font-size="15" fill="#0F1419" text-anchor="end" font-weight="600">R$ 80</text>
+                  </g>
+                </g>
+                <g transform="translate(32, 210)">
+                  <text x="0" y="0" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="1.5">HORÁRIOS / TER · 11 OUT</text>
+                  <line x1="0" y1="14" x2="260" y2="14" stroke="#E5E7EB"/>
+                  <g transform="translate(0, 30)" font-family="'Geist Mono', monospace" font-size="11">
+                    <g><rect x="0"   y="0" width="56" height="30" fill="none" stroke="#C4C8CE"/><text x="28" y="19" fill="#0F1419" text-anchor="middle">07:00</text></g>
+                    <g><rect x="64"  y="0" width="56" height="30" fill="#1B2F4A"/><text x="92" y="19" fill="#FFFFFF" text-anchor="middle">08:00</text></g>
+                    <g><rect x="128" y="0" width="56" height="30" fill="none" stroke="#C4C8CE"/><text x="156" y="19" fill="#0F1419" text-anchor="middle">14:30</text></g>
+                    <g><rect x="192" y="0" width="56" height="30" fill="none" stroke="#C4C8CE"/><text x="220" y="19" fill="#0F1419" text-anchor="middle">19:00</text></g>
+                  </g>
+                </g>
+                <g transform="translate(320, 86)">
+                  <rect x="0" y="0" width="248" height="58" fill="#FAFAF7" stroke="#C4C8CE"/>
+                  <circle cx="36" cy="29" r="20" fill="#ECEDEF" stroke="#C4C8CE"/>
+                  <rect x="68" y="18" width="100" height="6" fill="#0F1419"/>
+                  <rect x="68" y="30" width="80"  height="4" fill="#C4C8CE"/>
+                  <text x="232" y="33" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" text-anchor="end">R$ 100</text>
+                </g>
+                <g transform="translate(320, 156)">
+                  <rect x="0" y="0" width="248" height="58" fill="#FAFAF7" stroke="#C4C8CE"/>
+                  <circle cx="36" cy="29" r="20" fill="#ECEDEF" stroke="#C4C8CE"/>
+                  <rect x="68" y="18" width="90" height="6" fill="#0F1419"/>
+                  <rect x="68" y="30" width="70" height="4" fill="#C4C8CE"/>
+                  <text x="232" y="33" font-family="'Geist Mono', monospace" font-size="11" fill="#6B7280" text-anchor="end">R$ 120</text>
+                </g>
+                <g transform="translate(320, 240)">
+                  <text x="0" y="0" font-family="'Geist Mono', monospace" font-size="10" fill="#6B7280" letter-spacing="1.5">FILTROS</text>
+                  <line x1="0" y1="14" x2="248" y2="14" stroke="#E5E7EB"/>
+                  <g transform="translate(0, 30)" font-family="'Geist Mono', monospace" font-size="10">
+                    <g><rect x="0"   y="0" width="74" height="24" fill="#1B2F4A"/><text x="37" y="16" fill="#FFFFFF" text-anchor="middle">PERTO DE MIM</text></g>
+                    <g><rect x="82"  y="0" width="74" height="24" fill="none" stroke="#C4C8CE"/><text x="119" y="16" fill="#6B7280" text-anchor="middle">MUSCULAÇÃO</text></g>
+                    <g><rect x="164" y="0" width="50" height="24" fill="none" stroke="#C4C8CE"/><text x="189" y="16" fill="#6B7280" text-anchor="middle">YOGA</text></g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6 order-2">
+            <div class="caption text-slate-500 mb-4">2018—2019 · Fitness · Mobile</div>
+            <h3 class="h3-display text-ink mb-4">App para personal trainers</h3>
+            <p class="text-slate-500 leading-[1.6] max-w-[56ch]">Busca de profissionais por perfil e objetivo do usuário, agendamento e pagamentos. Estruturei a versão mobile do zero, com Redux e camada de API isolada.</p>
+            <div class="flex flex-wrap gap-2 mt-6">
+              <span class="chip">React Native</span>
+              <span class="chip">Redux</span>
+              <span class="chip">Axios</span>
+            </div>
+            <div class="mt-7">
+              <a href="#contato" class="link-grow caption text-navy-900">Ver caso →</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Stack -->
+  <section id="stack" class="border-b border-slate-300 section-pad" aria-labelledby="stack-h2">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+      <div class="eyebrow-tag mb-6">&lt;stack&gt;</div>
+      <div class="grid grid-cols-12 gap-8 items-end">
+        <h2 id="stack-h2" class="col-span-12 md:col-span-7 display text-ink accent-bar">Stack</h2>
+        <p class="col-span-12 md:col-span-5 lead text-slate-500">O que entrego no dia-a-dia.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mt-16">
+        <div>
+          <h3 class="caption text-ink pb-3 border-b border-slate-300 mb-5">Front-End</h3>
+          <ul class="space-y-2 font-mono text-sm text-ink">
+            <li>React</li>
+            <li>Vite</li>
+            <li>TypeScript</li>
+            <li>Redux</li>
+            <li>Redux-Saga</li>
+            <li>GraphQL</li>
+            <li>Tailwind</li>
+            <li>HTML5 · CSS3</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="caption text-ink pb-3 border-b border-slate-300 mb-5">Mobile</h3>
+          <ul class="space-y-2 font-mono text-sm text-ink">
+            <li>React Native</li>
+            <li>Redux</li>
+            <li>Redux-Saga</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="caption text-ink pb-3 border-b border-slate-300 mb-5">Infra · DevOps</h3>
+          <ul class="space-y-2 font-mono text-sm text-ink">
+            <li>Docker</li>
+            <li>GitHub Actions</li>
+            <li>CircleCI</li>
+            <li>Cloudflare Pages</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="caption text-ink pb-3 border-b border-slate-300 mb-5">Testes</h3>
+          <ul class="space-y-2 font-mono text-sm text-ink">
+            <li>Jest</li>
+            <li>React Testing Library</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 mt-16 pt-8 max-w-3xl">
+        <p class="font-mono text-sm leading-[1.6]">
+          <span class="text-navy-900">// nota.</span>
+          <span class="text-slate-500">Tenho experiência com Next.js. Atendo se o projeto já usa ou se o cliente pedir — meu default hoje é Vite pela liberdade de build e hospedagem.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Contato -->
+  <section id="contato" class="section-pad" aria-labelledby="contato-h2">
+    <div class="max-w-[1280px] mx-auto px-6 md:px-10">
+      <div class="eyebrow-tag mb-6">&lt;contato&gt;</div>
+      <h2 id="contato-h2" class="display-xl text-ink">
+        Vamos<br>conversar.
+      </h2>
+
+      <p class="lead text-slate-500 mt-10 max-w-2xl">
+        Atendo um número limitado de projetos por vez pra manter qualidade. Me conta o que você precisa que respondo em até 24h.
+      </p>
+
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href="mailto:contato@leandromsilva.dev.br" class="btn btn-primary">Enviar email<span aria-hidden="true">→</span></a>
+        <a href="https://wa.me/5511980783101" class="btn btn-outline" rel="noopener noreferrer" target="_blank">WhatsApp</a>
+      </div>
+
+      <div class="border-t border-slate-200 mt-14 pt-8 flex flex-wrap gap-x-10 gap-y-4 font-mono text-sm">
+        <a href="https://www.linkedin.com/in/leandromds/" target="_blank" rel="noopener noreferrer" class="link-grow text-navy-900">LinkedIn ↗</a>
+        <a href="https://github.com/leandromds" target="_blank" rel="noopener noreferrer" class="link-grow text-navy-900">GitHub ↗</a>
+        <a href="mailto:contato@leandromsilva.dev.br" class="link-grow text-navy-900">contato@leandromsilva.dev.br</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 8. Footer -->
+<footer class="border-t border-slate-300">
+  <div class="stripe stripe-inv" aria-hidden="true">
+    <div class="a"></div>
+    <div class="b"></div>
+  </div>
+  <div class="max-w-[1280px] mx-auto px-6 md:px-10 py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <img src="assets/logo.svg" alt="" width="20" height="20" class="block w-5 h-5" aria-hidden="true">
+      <p class="font-mono text-sm">
+        <span class="text-navy-900">~/leandro $</span>
+        <span class="text-slate-500">leandromsilva.dev.br</span>
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-4">
+      <span class="status-pill">
+        <span class="status-dot" aria-hidden="true"></span>
+        Disponível para projetos
+      </span>
+      <span class="caption text-slate-500">© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  (function(){
+    var btn = document.getElementById('navToggle');
+    var menu = document.getElementById('navMobile');
+    if (!btn || !menu) return;
+    btn.addEventListener('click', function(){
+      var open = menu.hasAttribute('hidden') ? false : true;
+      if (open) {
+        menu.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.querySelector('[data-open]').textContent = 'menu';
+      } else {
+        menu.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+        btn.querySelector('[data-open]').textContent = 'fechar';
+      }
+    });
+    // Close on nav click
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        menu.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.querySelector('[data-open]').textContent = 'menu';
+      });
+    });
+  })();
+</script>
+
+<script>
+  // Scroll → CSS variables para o fundo decorativo + progress bar
+  (function(){
+    var doc = document.documentElement;
+    var srVal = document.getElementById('srVal');
+    var ticking = false;
+    function update() {
+      var max = doc.scrollHeight - window.innerHeight;
+      var y = window.scrollY || window.pageYOffset || 0;
+      var pct = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+      doc.style.setProperty('--scroll-px', y + 'px');
+      doc.style.setProperty('--scroll-pct', (pct * 100).toFixed(2) + '%');
+      if (srVal) srVal.textContent = String(Math.round(pct * 100)).padStart(2, '0');
+      ticking = false;
+    }
+    function onScroll(){
+      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+</script>
+
+<script>
+  // Hero: wireframe trefoil torus knot
+  (function(){
+    var cvs = document.getElementById('knot');
+    if (!cvs) return;
+    var ctx = cvs.getContext('2d');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    var P = 2, Q = 3, R0 = 2, r0 = 1, tubeR = 0.42;
+    var U = 240, V = 12;
+
+    function curve(t){
+      var ct = Math.cos(P*t), st = Math.sin(P*t);
+      var cq = Math.cos(Q*t), sq = Math.sin(Q*t);
+      var w = R0 + r0*cq;
+      return [w*ct, w*st, r0*sq];
+    }
+    function norm(v){ var L = Math.hypot(v[0],v[1],v[2])||1; return [v[0]/L,v[1]/L,v[2]/L]; }
+    function cross(a,b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+    function diff(t, fn){
+      var h = 0.0008;
+      var a = fn(t-h), b = fn(t+h);
+      return [(b[0]-a[0])/(2*h),(b[1]-a[1])/(2*h),(b[2]-a[2])/(2*h)];
+    }
+
+    // Precompute mesh (parallel transport for stable frame)
+    var mesh = [];
+    var prevN = null;
+    for (var i = 0; i < U; i++){
+      var t = (i/U)*Math.PI*2;
+      var c = curve(t);
+      var T = norm(diff(t, curve));
+      var N;
+      if (!prevN){
+        // initialize: use an arbitrary up vector orthogonal-ized to T
+        var up = Math.abs(T[1]) < 0.9 ? [0,1,0] : [1,0,0];
+        var B0 = norm(cross(T, up));
+        N = norm(cross(B0, T));
+      } else {
+        // project previous N onto plane perpendicular to current T
+        var dot = prevN[0]*T[0]+prevN[1]*T[1]+prevN[2]*T[2];
+        N = norm([prevN[0]-dot*T[0], prevN[1]-dot*T[1], prevN[2]-dot*T[2]]);
+      }
+      var B = norm(cross(T, N));
+      prevN = N;
+      var ring = [];
+      for (var j = 0; j < V; j++){
+        var a = (j/V)*Math.PI*2;
+        var ca = Math.cos(a), sa = Math.sin(a);
+        ring.push([
+          c[0] + tubeR*(ca*N[0] + sa*B[0]),
+          c[1] + tubeR*(ca*N[1] + sa*B[1]),
+          c[2] + tubeR*(ca*N[2] + sa*B[2])
+        ]);
+      }
+      mesh.push(ring);
+    }
+
+    var rotY = 0, rotX = -0.55, dpr = 1, w = 0, h = 0;
+
+    function resize(){
+      var rect = cvs.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = rect.width; h = rect.height;
+      cvs.width  = Math.floor(w * dpr);
+      cvs.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+
+    function project(p){
+      var cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+      var cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+      var x = p[0], y = p[1], z = p[2];
+      var y1 = y*cosX - z*sinX;
+      var z1 = y*sinX + z*cosX;
+      y = y1; z = z1;
+      var x1 = x*cosY + z*sinY;
+      var z2 = -x*sinY + z*cosY;
+      return [x1, y, z2];
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      var scale = Math.min(w,h) * 0.135;
+      var cx = w/2, cy = h/2;
+
+      // Collect projected points
+      var pts = [];
+      for (var i = 0; i < U; i++){
+        var row = [];
+        for (var j = 0; j < V; j++){
+          var pr = project(mesh[i][j]);
+          row.push([cx + pr[0]*scale, cy + pr[1]*scale, pr[2]]);
+        }
+        pts.push(row);
+      }
+
+      ctx.lineWidth = 0.45;
+
+      // Longitudinal lines
+      for (var j2 = 0; j2 < V; j2++){
+        ctx.beginPath();
+        for (var i2 = 0; i2 <= U; i2++){
+          var ii = i2 % U;
+          var p = pts[ii][j2];
+          // depth-based opacity
+          var alpha = 0.18 + Math.max(0, Math.min(1, (p[2]+2.5)/5)) * 0.45;
+          if (i2 === 0){ ctx.moveTo(p[0], p[1]); }
+          else {
+            ctx.strokeStyle = 'rgba(55, 65, 81, ' + alpha.toFixed(3) + ')';
+            ctx.lineTo(p[0], p[1]);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(p[0], p[1]);
+          }
+        }
+      }
+      // Cross-section rings
+      for (var i3 = 0; i3 < U; i3 += 1){
+        ctx.beginPath();
+        for (var j3 = 0; j3 <= V; j3++){
+          var jj = j3 % V;
+          var p2 = pts[i3][jj];
+          var alpha2 = 0.14 + Math.max(0, Math.min(1, (p2[2]+2.5)/5)) * 0.40;
+          if (j3 === 0){ ctx.moveTo(p2[0], p2[1]); }
+          else {
+            ctx.strokeStyle = 'rgba(55, 65, 81, ' + alpha2.toFixed(3) + ')';
+            ctx.lineTo(p2[0], p2[1]);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(p2[0], p2[1]);
+          }
+        }
+      }
+    }
+
+    resize();
+    draw();
+
+    var last = performance.now();
+    function tick(now){
+      var dt = (now - last)/1000; last = now;
+      rotY += dt * 0.10;
+      rotX += dt * 0.018;
+      draw();
+      requestAnimationFrame(tick);
+    }
+    if (!reduce) requestAnimationFrame(tick);
+
+    var ro;
+    if (window.ResizeObserver){
+      ro = new ResizeObserver(function(){ resize(); draw(); });
+      ro.observe(cvs);
+    } else {
+      window.addEventListener('resize', function(){ resize(); draw(); });
+    }
+  })();
+</script>
+
+</body>
+</html>
