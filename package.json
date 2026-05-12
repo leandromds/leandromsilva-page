@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tailwindcss -i ./input.css -o ./assets/tailwind.css --minify",
+    "build": "tailwindcss -i ./input.css -o ./assets/tailwind.css --minify && rm -rf dist && mkdir -p dist/assets && cp index.html dist/ && cp assets/tailwind.css dist/assets/ && cp assets/logo.svg dist/assets/ && cp assets/leandro.jpg dist/assets/",
     "dev": "tailwindcss -i ./input.css -o ./assets/tailwind.css --watch"
   },
   "repository": {
